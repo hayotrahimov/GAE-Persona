@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} GAE-BP Login {% endblock %}
+
+{% block container_content %}
+
+    <div class="page-header">
+      <h1> Google App Engine Boilerplate <br/> <small> Signin </small></h1>
+    </div>
+
+    <div class="row">
+
+        <div class="span6">
+          <p>  GAE-BP uses Mozilla Persona.  </p>
+          <p> "Sign into sites across the Web quickly and easily with a single email of your choice." </p>
+          <p>
+            For more information about Persona, Mozilla's implementation of Browser ID for secure authentication,
+            see: <a href="https://www.mozilla.org/en-US/persona/">Persona</a> </p>
+        </div>
+
+
+        <div class="span6">
+            <img id="signin" src="static/images/persona_sign_in_blue.png"/>
+        </div>
+
+    </div>
+
+{% endblock %}
+

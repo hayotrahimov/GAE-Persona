@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %} GAE-BP {% endblock %}
+
+
+{% block container_content %}
+
+    <div class="page-header">
+      <h1> Google App Engine Boilerplate <br/> <small> Page with Sample Form </small></h1>
+    </div>
+
+    <div class="row">
+
+      <div class="span4">
+      </div>
+
+      <div class="span4">
+        <form class="well .span4" action="/" method="POST">
+
+        <legend>Query</legend>
+        <label>Term</label>
+        <input type="text" class="input-small span4" name="query" placeholder="...">
+
+        <span class="help-block">Enter your query term</span>
+        <button type="submit" class="btn">Cancel</button>
+        &nbsp;
+        <button type="submit" class="btn btn-primary">Go</button>
+
+        </form>
+      </div>
+
+      <div class="span4">
+      </div>
+
+     </div>
+
+{% endblock %}

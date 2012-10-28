@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} boilerplate results {% endblock %}
+
+
+{% block container_content %}
+
+    <div class="page-header">
+      <h1>Results</h1>
+    </div>	 
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
+      <!-- Sidebar content -->
+
+    </div>
+    <div class="span8">
+      <!--Body content-->  
+        {{ query }} 
+    </div>
+  </div>
+</div>
+
+{% endblock %}

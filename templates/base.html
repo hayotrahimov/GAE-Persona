@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %} GAE-BP  {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" type="text/css"  href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"  href="static/css/bootstrap-responsive.css">
+	  <link rel="stylesheet" type="text/css"  href="static/css/min.css">
+
+	  <script src="static/js/jquery-1.7.2.min.js"></script>
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+
+    <!-- all the js needed for Persona on per-page basis (I hope.) -->
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var signinLink = document.getElementById('signin');
+        if (signinLink) {
+            signinLink.onclick = function () { navigator.id.request(); };
+        };
+
+        var signoutLink = document.getElementById('signout');
+        if (signoutLink) {
+            signoutLink.onclick = function () { navigator.id.logout(); };
+        };
+
+        var theUser = null;
+        {% if currentUser %}
+          theUser = '{{ currentUser }}';
+        {% endif %}
+
+
+      navigator.id.watch({
+        loggedInUser: theUser, // if no currentUser this must be a javascript null
+        onlogin: function(assertion) {
+          // A user has logged in:
+          // 1. Send the assertion to  backend for verification and to create a session.
+          // 2. Update UI.
+          $.ajax({
+            type: 'POST',
+            url: '/login',
+            data: {assertion: assertion},
+            success: function(res, status, xhr) { window.location.reload(); },
+            error: function(res, status, xhr) { alert("login failure" + res); }
+          });
+        },
+
+        onlogout: function() {
+          // A user has logged out:
+          // Tear down the user's session by calling backend.
+          // Also, make sure that loggedInUser will get set to null on the next page load.
+          // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
+          $.ajax({
+            type: 'POST',
+            url: '/personalogout',
+            success: function(res, status, xhr) { window.location.reload(); },
+            error: function(res, status, xhr) { alert("logout failure" + res); }
+          });
+        }
+      });
+    });
+
+    </script>
+
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+
+	  footer {
+        margin: 5px 5px 0px 0px;
+        padding: 17px 10px 18px 10px;
+        border-top: 1px solid #000;
+      }
+
+    #signin {
+        cursor:pointer;
+    }
+  </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="static/images/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+
+	{% block headopt %}
+
+	{% endblock %}
+
+    <!-- Google Analytics - replace UA-XXXXX-X with your account credentials  -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    </script>
+
+  </head>
+
+  <body>
+
+    {% block nav %}
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">GAE-BP</a>
+          <div class="nav-collapse">
+          {% if currentUser %}
+            <p class="navbar-text pull-right">
+              <a class="btn btn-warning" id="signout">Sign out {{ currentUser }}</a>
+              <!-- <a href="/logout" class="navbar-link">Logout {{ currentUser }}</a> -->
+            </p>
+          {% else %}
+            <p class="navbar-text pull-right">
+              <a href="/login" class="navbar-link">Login</a>
+            </p>
+          {% endif %}
+            <ul class="nav">
+              <li><a href="/aform">Form</a></li>
+              <li><a href="/newpage">New Page</a></li>
+              <li><a href="/admin">Admin</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+	{% endblock %}
+
+    <div class="container">
+
+	{% block container_content %}
+
+
+	{% endblock %}
+
+    {% block footer %}
+
+  	    <footer>
+	      <div class="container">
+          &copy; <a href="http://www.identityassociates.com/">Identity Associates LLC 2012</a>, <a href="/about">About</a>
+		  </div>
+        </footer>
+
+	{% endblock %}
+
+    </div> <!-- /container or container_fluid --->
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+
+    {% block footopt%}
+
+    {% endblock %}
+
+  </body>
+</html>
+

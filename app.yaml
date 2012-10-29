@@ -1,4 +1,4 @@
-application: gae-bp
+application: gae-persona
 version: 2
 runtime: python27
 api_version: 1
@@ -19,22 +19,6 @@ handlers:
 - url: .*
   script: main.app
 
-inbound_services:
-- xmpp_message
-
 libraries:
 - name: django
   version: "1.2"
-
-error_handlers:
-
- - file: /templates/default_error.html
-
- - error_code: over_quota
-   file: /templates/over_quota.html
-
- - error_code: dos_api_denial
-   file: /templates/dos_api_denial.html
-
- - error_code: timeout
-   file: /templates/timeout.html

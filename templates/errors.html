@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %} Mytfaves Problem {% endblock %}
+{% block title %} Problem {% endblock %}
+
+{% block persona %}
+
+{% endblock %}
 
 {% block container_content %}
 
-        <div class="page-header">
-          <h1>Oh Snap. A problem.</h1>
-        </div>
-        <div class="row">
-          <div class="span8">
-            <h2> Details </h2>
-            <div class="alert alert-error">
-            <p> {{ usermsg }}</p>
-            <p> {{ badpath }} </p>
-            <p> {{ traceback|linebreaks }} </p>
-            </div>
-          </div>
-          <div class="span4">
-            <h3>Staff Notified</h3>
-            <p> <small> Problem details have been logged and the issue will be reviewed ASAP.</small></p>
-          </div>
-        </div>
+  <div class="page-header">
+    <h3>Oh Snap. A problem.</h3>
+  </div>
+  <div class="row">
+    <div class="span8">
+      <h3> Details </h3>
+      <div class="alert alert-error">
+      <p> {{ usermsg }} </p>
+      <p> {{errormsg }} </p>
+      <p> {{ badpath }} </p>
+      <p> {{ traceback|linebreaks }} </p>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

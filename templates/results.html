@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %} boilerplate results {% endblock %}
+{% block title %} Persona Signin {% endblock %}
 
 
 {% block container_content %}
 
     <div class="page-header">
-      <h1>Results</h1>
-    </div>	 
+      <h3>{{ currentUser }} <small> signed in </small> </h3>
+    </div>
 
 <div class="container-fluid">
   <div class="row-fluid">
@@ -16,8 +16,15 @@
 
     </div>
     <div class="span8">
-      <!--Body content-->  
-        {{ query }} 
+      <!--Body content-->
+        <h3> Mozilla Persona Fine Print </h3>
+          Issuer: {{ issuer }}
+          <br/>
+          Expires: {{ date }} <small> (Timestamp: {{expires}}) </small>
+          <br/>
+          Audience: {{ audience }}
+          <br/>
+          <br/>
     </div>
   </div>
 </div>

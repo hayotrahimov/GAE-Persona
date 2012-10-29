@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %} GAE-BP  {% endblock %}</title>
+    <title>{% block title %} GAE Persona  {% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -10,13 +10,14 @@
     <!-- Le styles -->
     <link rel="stylesheet" type="text/css"  href="static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"  href="static/css/bootstrap-responsive.css">
-	  <link rel="stylesheet" type="text/css"  href="static/css/min.css">
 
 	  <script src="static/js/jquery-1.7.2.min.js"></script>
     <script src="https://login.persona.org/include.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
 
     <!-- all the js needed for Persona on per-page basis (I hope.) -->
+
+    {% block persona %}
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -35,9 +36,9 @@
           theUser = '{{ currentUser }}';
         {% endif %}
 
-
       navigator.id.watch({
         loggedInUser: theUser, // if no currentUser this must be a javascript null
+
         onlogin: function(assertion) {
           // A user has logged in:
           // 1. Send the assertion to  backend for verification and to create a session.
@@ -46,7 +47,9 @@
             type: 'POST',
             url: '/login',
             data: {assertion: assertion},
-            success: function(res, status, xhr) { window.location.reload(); },
+            success: function(res, status, xhr) {
+              // Login success!
+              window.location = '/'; },
             error: function(res, status, xhr) { alert("login failure" + res); }
           });
         },
@@ -67,6 +70,8 @@
     });
 
     </script>
+
+    {% endblock %}
 
     <style>
       body {
@@ -100,21 +105,6 @@
 
 	{% endblock %}
 
-    <!-- Google Analytics - replace UA-XXXXX-X with your account credentials  -->
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-XXXXX-X']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-    </script>
-
   </head>
 
   <body>
@@ -129,22 +119,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">GAE-BP</a>
+          <a class="brand" href="/">GAE Persona</a>
           <div class="nav-collapse">
           {% if currentUser %}
             <p class="navbar-text pull-right">
               <a class="btn btn-warning" id="signout">Sign out {{ currentUser }}</a>
               <!-- <a href="/logout" class="navbar-link">Logout {{ currentUser }}</a> -->
             </p>
-          {% else %}
-            <p class="navbar-text pull-right">
-              <a href="/login" class="navbar-link">Login</a>
-            </p>
           {% endif %}
             <ul class="nav">
-              <li><a href="/aform">Form</a></li>
-              <li><a href="/newpage">New Page</a></li>
-              <li><a href="/admin">Admin</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -153,7 +136,7 @@
 
 	{% endblock %}
 
-    <div class="container">
+  <div class="container">
 
 	{% block container_content %}
 
@@ -162,15 +145,19 @@
 
     {% block footer %}
 
-  	    <footer>
+  	 <footer>
 	      <div class="container">
-          &copy; <a href="http://www.identityassociates.com/">Identity Associates LLC 2012</a>, <a href="/about">About</a>
-		  </div>
-        </footer>
+          <small>
+            <a href="https://developers.google.com/appengine/">Google App Engine,</a>
+            <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap,</a>
+            <a href="http://webapp-improved.appspot.com/">Webapp2</a>
+          </small>
+		    </div>
+      </footer>
 
 	{% endblock %}
 
-    </div> <!-- /container or container_fluid --->
+  </div> <!-- /container or container_fluid -->
 
 
     <!-- Le javascript
@@ -184,4 +171,3 @@
 
   </body>
 </html>
-

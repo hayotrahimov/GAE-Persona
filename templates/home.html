@@ -1,26 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %} GAE-BP {% endblock %}
-
+{% block title %} GAE Persona {% endblock %}
 
 {% block container_content %}
 
-    <div class="page-header">
-      <h1> Google App Engine Boilerplate <br/> <small> Yes, another one... </small></h1>
-    </div>
+  <div class="page-header">
+    <h3> Google App Engine Persona Sample </h3>
+  </div>
 
-	<div class="row">
+  <div class="row">
 
-    <div class="span6">
-    This boilerplate system runs on Google's App Engine infrastructure, using Python 2.7, WebApp2, and Twitter Bootstrap.
-    <br/>
-    <br/>
-    It uses Mozilla Persona for authentication.
-    </div>
+      <div class="span6">
+        <h4>  Sign In with Mozilla Persona </h4>
+        <br/>
+        <p> "Sign into sites across the Web quickly and easily with a single email of your choice." </p>
+        <p>
+          For more information about Persona, Mozilla's implementation of Browser ID for secure authentication,
+          see: <a href="https://www.mozilla.org/en-US/persona/">https://www.mozilla.org/en-US/persona/</a> </p>
+        <p>
+          You can use mockmyid to test.  See: <a href="https://mockmyid.com/">https://mockmyid.com/</a>
+      </div>
 
-    <div class="span6">
-    </div>
 
-	</div>
+      <div class="span6">
+          <img id="signin" src="static/images/persona_sign_in_blue.png"/>
+      </div>
+
+  </div>
+
 
 {% endblock %}

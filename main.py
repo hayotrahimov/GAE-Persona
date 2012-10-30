@@ -1,5 +1,29 @@
 #!/usr/bin/env python
 
+"""
+The MIT License
+
+Copyright (c) 2012 Peter Lieberwirth
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+"""
+
 import os
 import logging
 import sys
@@ -39,7 +63,7 @@ def user_required(handler):
             # we do not have a session yet.  go to login page
             self.redirect('/login')
         else:
-            # todo: now that i do self.session.clear() on logout I think i don't need this next chunk
+            # todo: now self.session.clear() on logout is called, so maybe don't need this next chunk
             if currentUser == None:
                 self.redirect('/login')
             else:
@@ -78,7 +102,8 @@ class BaseRequestHandler(webapp2.RequestHandler):
     @webapp2.cached_property
     def session(self):
         # Returns a database session (using default cookie?)
-        return self.session_store.get_session(name='db_session', factory=sessions_ndb.DatastoreSessionFactory)
+        return self.session_store.get_session(name='db_session',
+            factory=sessions_ndb.DatastoreSessionFactory)
 
     def head(self, *args):
         """Head is used by Twitter. If not used the tweet button shows 0"""
@@ -114,7 +139,8 @@ class BaseRequestHandler(webapp2.RequestHandler):
 
     def render_error(self, errormsg, usermsg='Application Error'):
         """Logs the error, renders the error page template, and sends it to the client. """
-        self.render_to_response('templates/errors.html', {'errormsg': errormsg, 'usermsg': usermsg})
+        self.render_to_response('templates/errors.html',
+            {'errormsg': errormsg, 'usermsg': usermsg})
 
     def handle_exception(self, exception, debug_mode):
         # todo: this can probably be seriously cleaned up.
@@ -202,7 +228,8 @@ class LoginHandler(BaseRequestHandler):
             # logging.debug('created this session:')
             # logging.debug(self.session)
         else:
-            return self.render_error(errormsg='Persona verification result error status is %s' % result.get('status'),
+            return self.render_error(errormsg='Persona verification result error status is %s'
+                % result.get('status'),
                 usermsg='Authentication Problem')
 
         # todo: save user in datastore here?  or not....
